@@ -1,68 +1,190 @@
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  color: #343434;
+  background-color: #eeeeee;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+.title {
+  color: #3f89ca;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+.main-buttons {
+  display: inline-block;
+  outline: 0;
+  border: 0;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  will-change: box-shadow, transform;
+  background: #FCFCFD;
+  box-shadow: 0px 2px 4px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px #d6d6e7;
+  height: 30px;
+  padding: 0 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  color: #36395a;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  margin-right: 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+.onbutton {
+  background-color: red;
+  color: white;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.component-header {
+  font-size: 20px;
+  color: #343434;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1), 0px 7px 13px -3px rgba(0, 0, 0, 0.1);
+  margin-top: 25px;
+  padding-bottom: 25px;
+  text-align: left;
+}
+
+.add-child {
+  margin-top: 15px;
+  display: inline-block;
+  outline: 0;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid #babfc3;
+  padding: 11px 11px;
+  min-height: 44px;
+  min-width: 44px;
+  color: #202223;
+  background: #ffffff;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px;
+
+  :hover {
+    background: #f6f6f7;
+    outline: 1px solid transparent;
   }
-  a:hover {
-    color: #747bff;
+}
+
+.token {
+  margin-top: 15px;
+  display: inline-block;
+  outline: 0;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid #babfc3;
+  padding: 11px 11px;
+  min-height: 80px;
+  min-width: 150px;
+  color: #202223;
+  background: #ffffff;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px;
+  margin-right: 15px;
+}
+
+#star-token {
+  font-size: 50px;
+  background-color: lightyellow;
+}
+
+#smile-token {
+  font-size: 50px;
+  background-color: lightgoldenrodyellow;
+}
+
+#heart-token {
+  font-size: 50px;
+  background-color: lightpink;
+}
+
+#pizza-token {
+  font-size: 50px;
+  background-color: lightcoral;
+}
+
+#trophy-token {
+  font-size: 50px;
+  background-color: lightblue;
+}
+
+#custom-token {
+  font-size: 50px;
+  background-color: lightgray;
+}
+
+.award-token {
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  font-size: 16px;
+  background-color: lightgreen;
+  width: 100%;
+}
+
+.wrapper {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+.left-align {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.left-align>section {
+  background: #f0f0f0;
+}
+
+.right-align {
+  width: 300px;
+}
+
+@media (max-width: 768px) {
+
+  .left-align,
+  .right-align {
+    width: 100%;
+    margin-left: 0;
   }
-  button {
-    background-color: #f9f9f9;
-  }
+}
+
+.add-reward {
+  display: block;
+  margin: 0 auto;
+  border-radius: 500px;
+  border: 1px solid transparent;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  color: black;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  background-color: lightgreen;
 }
