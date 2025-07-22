@@ -8,5 +8,5 @@ function ChildProfile() {
             </div>
         </>
     )
-}
+};
 export default ChildProfile;   

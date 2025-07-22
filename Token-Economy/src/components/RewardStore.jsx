@@ -8,5 +8,5 @@ function RewardStore() {
             </div>
         </>
     )
-}
+};
 export default RewardStore; 
