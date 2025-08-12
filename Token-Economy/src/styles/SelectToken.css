@@ -1,0 +1,48 @@
+.token {
+  margin-top: 15px;
+  display: inline-block;
+  outline: 0;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid #babfc3;
+  padding: 11px 11px;
+  min-height: 80px;
+  min-width: 150px;
+  color: #202223;
+  background: #ffffff;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px;
+  margin-right: 15px;
+}
+
+#star-token {
+  font-size: 50px;
+  background-color: lightyellow;
+}
+
+#smile-token {
+  font-size: 50px;
+  background-color: lightgoldenrodyellow;
+}
+
+#heart-token {
+  font-size: 50px;
+  background-color: lightpink;
+}
+
+#pizza-token {
+  font-size: 50px;
+  background-color: lightcoral;
+}
+
+#trophy-token {
+  font-size: 50px;
+  background-color: lightblue;
+}
+
+#custom-token {
+  font-size: 50px;
+  background-color: lightgray;
+}

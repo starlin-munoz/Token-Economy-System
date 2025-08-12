@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import './App.css'
 import './index.css'
+import './styles/ChildProfile.css'
+import './styles/CurrentGoal.css'
+import './styles/RewardStore.css'
+import './styles/SelectToken.css'
 import ChildProfile from './components/ChildProfile'
 import SelectToken from './components/SelectToken'
 import CurrentGoal from './components/CurrentGoal'

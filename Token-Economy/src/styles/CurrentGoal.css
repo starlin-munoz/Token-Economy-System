@@ -1,0 +1,106 @@
+.token-btn{
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  font-size: 16px;
+  width: 100%;
+}
+
+.award-token {
+  background-color: lightgreen;
+}
+
+.reset-token-board {
+  background-color: lightcoral;
+}
+
+select,
+::picker(select) {
+  appearance: base-select;
+  font-size: 14px;
+}
+
+select {
+  flex: 1;
+}
+
+select {
+  border: 2px solid #ddd;
+  background: #eee;
+  margin-left: 10px;
+  transition: 0.4s;
+
+}
+
+select:hover,
+select:focus {
+  background: #ddd;
+}
+
+select::picker-icon {
+  color: #999;
+  transition: 0.4s rotate;
+}
+
+select:open::picker-icon {
+  rotate: 180deg;
+}
+
+::picker(select) {
+  border: none;
+}
+
+option {
+  display: flex;
+  justify-content: flex-start;
+
+  border: 2px solid #ddd;
+  background: #eee;
+  padding: 10px;
+  transition: 0.4s;
+}
+
+option:first-of-type {
+  border-radius: 8px 8px 0 0;
+}
+
+option:last-of-type {
+  border-radius: 0 0 8px 8px;
+}
+
+option:not(option:last-of-type) {
+  border-bottom: none;
+}
+
+option:nth-of-type(odd) {
+  background: #fff;
+}
+
+option:hover,
+option:focus {
+  background: rgb(133, 245, 133);
+}
+
+option .icon {
+  font-size: 1.6rem;
+  text-box: trim-both cap alphabetic;
+}
+
+option:checked {
+  font-weight: bold;
+}
+
+option::checkmark {
+  order: 1;
+  margin-left: auto;
+  content: "✅";
+}
