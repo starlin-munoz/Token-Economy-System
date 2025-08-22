@@ -104,3 +104,97 @@ option::checkmark {
   margin-left: auto;
   content: "✅";
 }
+
+.popup-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.popup-container {
+  position: relative;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  max-width: 300px;
+  z-index: 10;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.star-1 {
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  font-size: 50px;
+  z-index: 1;
+  animation: float 2.5s ease-in-out infinite;
+}
+
+.star-2 {
+  position: absolute;
+  top: 15%;
+  right: 20%;
+  font-size: 50px;
+  z-index: 1;
+  animation: float 3s ease-in-out infinite;
+}
+
+.star-3 {
+  position: absolute;
+  bottom: 10%;
+  left: 25%;
+  font-size: 50px;
+  z-index: 1;
+  animation: float 2.8s ease-in-out infinite;
+}
+
+.star-4 {
+  position: absolute;
+  bottom: 15%;
+  right: 15%;
+  font-size: 50px;
+  z-index: 1;
+  animation: float 2.7s ease-in-out infinite;
+}
+
+.star-5 {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  font-size: 50px;
+  z-index: 1;
+  animation: float 3.2s ease-in-out infinite;
+}
+
+.star-6 {
+  position: absolute;
+  bottom: 5%;
+  left: 10%;
+  font-size: 50px;
+  z-index: 1;
+  animation: float 3s ease-in-out infinite;
+}

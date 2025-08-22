@@ -1,20 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 function CurrentGoal({ selected }) {
 
     // State to manage awarded tokens
     const [awardedTokens, setAwardedTokens] = useState([]);
 
+    // State to track awarded tokens 
+    const tokens = awardedTokens.length;
+
+    // State to track maximum number of tokens from the dropdown
+    const [maxTokens, setMaxTokens] = useState(1);
+
+    // State to handle popup when goal is met 
+    const [popUp, setPopUp] = useState(false);
+
     // Function to handle awarding a token
     const handleAwardToken = () => {
-        if (selected) {
-            setAwardedTokens(prev => [...prev, selected]);
+        // If a token is selected and token amount is less than the goal
+        if (selected && tokens < maxTokens) {
+            setAwardedTokens(prev => {
+                const updatedTokens = [...prev, selected];
+                // If amount of tokens equals that of the goal, 
+                // allow the congratulation popup to appear
+                if (updatedTokens.length === maxTokens) {
+                    setPopUp(true);
+                }
+                return updatedTokens;
+            });
         }
     };
 
     // Function to reset awarded tokens
     const resetTokenBoard = () => {
         setAwardedTokens([]);
+        setPopUp(false); 
     }
 
     // Function to get the emoji based on the token ID
@@ -37,22 +56,23 @@ function CurrentGoal({ selected }) {
         }
     };
 
+    // Function to handle dropdown changes 
+    const handleDropdown = (e) => {
+        const goal = parseInt(e.target.value); // Convert the goal from string to integer
+        setMaxTokens(goal); // Update maxTokens state
+        setAwardedTokens([]); // Reset tokens when goal changes
+        setPopUp(false); // Return popUp state to false
+    };
+
     return (
         <>
             <div className="component-header">
                 <strong>Current Goal</strong>
-                <select className="token-goal-select">
+                <select className="token-goal-select" onChange={handleDropdown} value={maxTokens}>
                     <option value="" hidden>Token Goal</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
+                    {[...Array(10)].map((_, i) => (
+                        <option key={i + 1} value={i + 1}>{i + 1}</option>
+                    ))}
                 </select>
                 <br />
                 <p>
@@ -63,7 +83,7 @@ function CurrentGoal({ selected }) {
                     ))}
                 </p>
                 <div className="component-box">
-                    <button className="award-token token-btn" onClick={handleAwardToken}>
+                    <button className="award-token token-btn" onClick={handleAwardToken} disabled={tokens >= maxTokens}>
                         <strong>
                             <img src="./images/medal-emoji.png" alt="Award" width="16" height="16" />
                             Award Token
@@ -77,6 +97,25 @@ function CurrentGoal({ selected }) {
                     </button>
                 </div>
             </div>
+
+            {/* PopUp Model for when token goal is met */}
+            {popUp && (
+                <div className="popup-backdrop">
+
+                    <span className="star-1">✨</span>
+                    <span className="star-2">✨</span>
+                    <span className="star-3">✨</span>
+                    <span className="star-4">✨</span>
+                    <span className="star-5">✨</span>
+                    <span className="star-6">✨</span>
+
+                    <div className="popup-container">
+                        <h2>🎉 Congratulations! 🎉</h2>
+                        <p>You reached your token goal of {maxTokens}!</p>
+                        <button className="close-btn" onClick={() => setPopUp(false)}>Close</button>
+                    </div>
+                </div>
+            )}
         </>
     )
 };
