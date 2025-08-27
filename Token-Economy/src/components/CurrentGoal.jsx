@@ -1,66 +1,42 @@
 import React, { useState, useRef } from 'react';
 
-function CurrentGoal({ selected }) {
-
-    // State to manage awarded tokens
-    const [awardedTokens, setAwardedTokens] = useState([]);
+function CurrentGoal({ currentGoalTokens, setCurrentGoalTokens, selected, awardedTokens, setAwardedTokens, maxTokens, setMaxTokens }) {
 
     // State to track awarded tokens 
-    const tokens = awardedTokens.length;
+    const tokens = currentGoalTokens.length;
 
-    // State to track maximum number of tokens from the dropdown
-    const [maxTokens, setMaxTokens] = useState(1);
-
-    // State to handle popup when goal is met 
+    // State to handle popup when goal is met
     const [popUp, setPopUp] = useState(false);
 
     // Function to handle awarding a token
     const handleAwardToken = () => {
-        // If a token is selected and token amount is less than the goal
-        if (selected && tokens < maxTokens) {
-            setAwardedTokens(prev => {
-                const updatedTokens = [...prev, selected];
-                // If amount of tokens equals that of the goal, 
-                // allow the congratulation popup to appear
-                if (updatedTokens.length === maxTokens) {
-                    setPopUp(true);
-                }
-                return updatedTokens;
-            });
+        // If no token is selected or the current goal is met
+        if (!selected || tokens >= maxTokens) {
+            return;
         }
+
+        // Add token to current goal
+        setCurrentGoalTokens(prev => {
+            const updatedGoalTokens = [...prev, selected];
+            if (updatedGoalTokens.length === maxTokens) {
+                setPopUp(true);
+            }
+            return updatedGoalTokens;
+        });
+        setAwardedTokens(prev => [...prev, selected]);
     };
 
     // Function to reset awarded tokens
     const resetTokenBoard = () => {
-        setAwardedTokens([]);
-        setPopUp(false); 
+        setCurrentGoalTokens([]);
+        setPopUp(false);
     }
 
-    // Function to get the emoji based on the token ID
-    const getEmojiFromId = (id) => {
-        switch (id) {
-            case 'star-token':
-                return '⭐';
-            case 'smile-token':
-                return '😊';
-            case 'heart-token':
-                return '❤️';
-            case 'trophy-token':
-                return '🏆';
-            case 'pizza-token':
-                return '🍕';
-            case 'custom-token':
-                return '🔧';
-            default:
-                return '';
-        }
-    };
-
-    // Function to handle dropdown changes 
+    // Function to handle dropdown changes
     const handleDropdown = (e) => {
         const goal = parseInt(e.target.value); // Convert the goal from string to integer
         setMaxTokens(goal); // Update maxTokens state
-        setAwardedTokens([]); // Reset tokens when goal changes
+        setCurrentGoalTokens([]); // Reset tokens when goal changes
         setPopUp(false); // Return popUp state to false
     };
 
@@ -75,12 +51,33 @@ function CurrentGoal({ selected }) {
                     ))}
                 </select>
                 <br />
+
+                {/* Show tokens currently awarded toward the goal */}
                 <p>
-                    {awardedTokens.map((token, index) => (
-                        <span key={index} style={{ fontSize: '50px', marginRight: '8px' }}>
-                            {getEmojiFromId(token)}
-                        </span>
-                    ))}
+                    <strong>Goal Tokens:</strong>{' '}
+                    {currentGoalTokens.length === 0 ? (
+                        <em>No tokens awarded yet</em>
+                    ) : (
+                        currentGoalTokens.map((emoji, index) => (
+                            <span key={`goal-${index}`} style={{ fontSize: '50px', marginRight: '8px' }}>
+                                {emoji}
+                            </span>
+                        ))
+                    )}
+                </p>
+
+                {/* Show tokens available in the bank */}
+                <p>
+                    <strong>Bank Tokens:</strong>{' '}
+                    {awardedTokens.length === 0 ? (
+                        <em>No tokens in bank</em>
+                    ) : (
+                        awardedTokens.map((emoji, index) => (
+                            <span key={`bank-${index}`} style={{ fontSize: '30px', marginRight: '6px' }}>
+                                {emoji}
+                            </span>
+                        ))
+                    )}
                 </p>
                 <div className="component-box">
                     <button className="award-token token-btn" onClick={handleAwardToken} disabled={tokens >= maxTokens}>
@@ -117,6 +114,6 @@ function CurrentGoal({ selected }) {
                 </div>
             )}
         </>
-    )
+    );
 };
 export default CurrentGoal; 

@@ -1,48 +1,49 @@
 .token {
-  margin-top: 15px;
-  display: inline-block;
-  outline: 0;
+  font-size: 50px;
+  padding: 8px;
+  margin: 5px;
   cursor: pointer;
-  text-align: center;
-  border: 1px solid #babfc3;
-  padding: 11px 11px;
-  min-height: 80px;
-  min-width: 150px;
-  color: #202223;
-  background: #ffffff;
-  border-radius: 4px;
-  font-weight: 500;
-  font-size: 14px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px;
-  margin-right: 15px;
+  background-color: transparent;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
-#star-token {
-  font-size: 50px;
-  background-color: lightyellow;
+.token:hover {
+  background-color: #f1f1f1;
 }
 
-#smile-token {
-  font-size: 50px;
-  background-color: lightgoldenrodyellow;
+.token.selected {
+  background-color: #d1e7dd;
+  border: 3px solid #0f5132;
 }
 
-#heart-token {
-  font-size: 50px;
-  background-color: lightpink;
+.token-0 {
+  background-color: #fce5cd;
 }
 
-#pizza-token {
-  font-size: 50px;
-  background-color: lightcoral;
+.token-1 {
+  background-color: #d9ead3;
 }
 
-#trophy-token {
-  font-size: 50px;
-  background-color: lightblue;
+.token-2 {
+  background-color: #cfe2f3;
 }
 
-#custom-token {
-  font-size: 50px;
+.token-3 {
+  background-color: #e2cfcf;
+}
+
+.token-4 {
+  background-color: #f9cb9c;
+}
+
+.custom-token {
   background-color: lightgray;
+  min-width: 64px;
+  min-height: 64px;
 }

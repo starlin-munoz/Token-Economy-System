@@ -1,0 +1,169 @@
+.profiles-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.profile-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #e0f2fe;
+  border-radius: 9999px;
+  padding: 0.3rem 2.5rem 0.3rem 1rem; 
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0.8rem;
+  gap: 0.6rem;
+  flex: 0 1 auto;
+  max-width: fit-content;
+  cursor: default;
+  transition: background-color 0.3s ease;
+}
+
+.profile-card:hover {
+  background-color: #bae6fd;
+}
+
+.profile-emoji {
+  font-size: 1.6rem;
+  margin-right: 0;
+}
+
+.profile-info h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0369a1;
+  white-space: nowrap;
+}
+
+.profile-form {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 1rem;
+  overflow-wrap: break-word;
+}
+
+.profile-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 1.2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.profile-form input,
+.profile-form select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  margin-top: 0.3rem;
+  border: 1.5px solid #bbb;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  height: 38px;
+  line-height: 1.2;
+  vertical-align: middle;
+  appearance: none;
+  background-color: white;
+}
+
+.profile-form input:focus,
+.profile-form select:focus {
+  outline: none;
+  border-color: #4caf50;
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+}
+
+.profile-form button[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  padding: 0.65rem 1.4rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.profile-form button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.profile-form button[type="button"] {
+  background-color: #f44336;
+  color: white;
+  padding: 0.65rem 1.4rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.profile-form button[type="button"]:hover {
+  background-color: #da190b;
+}
+
+.btn.add-client-btn {
+  display: block;
+  background-color: #2196f3;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  margin: 1.5rem auto 0 auto;
+  width: 100%;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.btn.add-client-btn:hover {
+  background-color: #1976d2;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.remove-btn {
+  position: absolute;
+  top: 50%;
+  right: 0.4rem;
+  transform: translateY(-50%);
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  padding: 0;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+.remove-btn:hover {
+  background-color: #da190b;
+}

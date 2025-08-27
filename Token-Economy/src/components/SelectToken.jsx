@@ -1,26 +1,32 @@
 import '../index.css';
-function SelectToken({selectedToken, setSelectedToken}) {
+import { useState } from 'react';
+import EmojiPicker from 'emoji-picker-react';
+
+function SelectToken({ selectedToken, setSelectedToken }) {
+
+    // State to show emoji picker
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+
+    // State to manage custom token input
+    const [customToken, setCustomToken] = useState('🔧');
+
+    const tokens = ['⭐', '😊', '❤️', '🏆', '🍕'];
 
     // Function to handle token selection
-    const handleTokenSelect = (e) => {
-        const selected = e.target.id;
+    const handleTokenSelect = (emoji) => {
+        setSelectedToken(prev => prev === emoji ? null : emoji);
+    };
 
-        // Reset background color for all tokens
-        const tokens = document.querySelectorAll('.token');
-        tokens.forEach(token => {
-            token.style.backgroundColor = '';
-            token.style.border = '';
-        });
+    // Function to handle emoji selection from picker
+    const handleCustomTokenChange = (emojiObj) => {
+        setCustomToken(emojiObj.emoji);
+        setSelectedToken(emojiObj.emoji);
+        setShowEmojiPicker(false);
+    };
 
-        if (selected === selectedToken) {
-            // Token is already selected, so deselect it
-            setSelectedToken(null);
-            return;
-        }
-        // Highlight the selected token
-        e.target.style.backgroundColor = '#d1e7dd';
-        e.target.style.border = '3px solid #0f5132';
-        setSelectedToken(selected);
+    // Function to handle custom token click
+    const handleCustomTokenClick = () => {
+        setShowEmojiPicker(true);
     };
 
     return (
@@ -28,14 +34,33 @@ function SelectToken({selectedToken, setSelectedToken}) {
             <div className="component-header">
                 <strong>Select Token</strong>
                 <br />
-                <button className="token" id="star-token" onClick={handleTokenSelect}>⭐</button>
-                <button className="token" id="smile-token" onClick={handleTokenSelect}>😊</button>
-                <button className="token" id="heart-token" onClick={handleTokenSelect}>❤️</button>
-                <button className="token" id="trophy-token" onClick={handleTokenSelect}>🏆</button>
-                <button className="token" id="pizza-token" onClick={handleTokenSelect}>🍕</button>
-                <button className="token" id="custom-token" onClick={handleTokenSelect}>🔧</button>
+                {tokens.map((emoji, index) => (
+                    <button
+                        key={emoji}
+                        className={`token token-${index} ${selectedToken === emoji ? 'selected' : ''}`}
+                        onClick={() => handleTokenSelect(emoji)}
+                    >
+                        {emoji}
+                    </button>
+                ))}
+
+                <button
+                    className={`token custom-token ${selectedToken === customToken ? 'selected' : ''}`}
+                    onClick={handleCustomTokenClick}
+                >
+                    {customToken}
+                </button>
+
+                {showEmojiPicker && (
+                    <div className="emoji-picker-popup">
+                        <EmojiPicker onEmojiClick={handleCustomTokenChange} />
+                        <button className="close-picker" onClick={() => setShowEmojiPicker(false)}>
+                            Cancel
+                        </button>
+                    </div>
+                )}
             </div>
         </>
-    )
+    );
 };
 export default SelectToken; 

@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
-import './App.css'
-import './index.css'
-import './styles/ChildProfile.css'
-import './styles/CurrentGoal.css'
-import './styles/RewardStore.css'
-import './styles/SelectToken.css'
-import ChildProfile from './components/ChildProfile'
-import SelectToken from './components/SelectToken'
-import CurrentGoal from './components/CurrentGoal'
-import RewardStore from './components/RewardStore'
+import React, { useEffect, useState } from 'react';
+import './App.css';
+import './index.css';
+import './styles/ClientProfile.css';
+import './styles/CurrentGoal.css';
+import './styles/RewardStore.css';
+import './styles/SelectToken.css';
+import ChildProfile from './components/ClientProfile';
+import SelectToken from './components/SelectToken';
+import CurrentGoal from './components/CurrentGoal';
+import RewardStore from './components/RewardStore';
 
 function App() {
+
+  // State to manage tokens awarded to the current goal
+  const [currentGoalTokens, setCurrentGoalTokens] = useState([]);
 
   // State to manage high contrast mode
   const [contrast, setContrast] = useState(false);
@@ -20,6 +23,22 @@ function App() {
 
   // State to manage the selected token
   const [selectedToken, setSelectedToken] = useState(null);
+
+  // State to manage awarded tokens 
+  // We use localStorage to keep token amount even if board reset
+  // Token amount should only decrease if used to redeem rewards
+  const [awardedTokens, setAwardedTokens] = useState(() => {
+    const saved = localStorage.getItem("awardedTokens");
+    return saved ? JSON.parse(saved) : 0;
+  });
+
+  // Save awarded tokens to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem("awardedTokens", JSON.stringify(awardedTokens));
+  }, [awardedTokens]);
+
+  // State to track max tokens needed to achieve the current goal
+  const [maxTokens, setMaxTokens] = useState(1);
 
   // Function to toggle high contrast mode
   const toggleContrast = () => {
@@ -83,9 +102,9 @@ function App() {
       <button className="main-buttons" id="voice-prompts" onClick={changeVoiceBtn}>
         <img src="./images/Speaker_Icon.svg" alt="Speaker" width="16" height="16" />
         Voice Prompts
-        <button className="onbutton" onClick={changeVoiceBtn}>
+        <div className="onbutton">
           {voiceBtn ? 'ON' : 'OFF'}
-        </button>
+        </div>
       </button>
 
       <div className="wrapper">
@@ -98,15 +117,26 @@ function App() {
             />
           </section>
           <section>
-            <CurrentGoal selected={selectedToken} />
+            <CurrentGoal
+              currentGoalTokens={currentGoalTokens}
+              setCurrentGoalTokens={setCurrentGoalTokens}
+              selected={selectedToken}
+              awardedTokens={awardedTokens}
+              maxTokens={maxTokens}
+              setAwardedTokens={setAwardedTokens}
+              setMaxTokens={setMaxTokens}
+            />
           </section>
         </div>
         <section className="right-align">
-          <RewardStore />
+          <RewardStore 
+            awardedTokens={awardedTokens} 
+            setAwardedTokens={setAwardedTokens} 
+          />
         </section>
       </div>
     </div>
-  )
+  );
 };
 
 export default App;
