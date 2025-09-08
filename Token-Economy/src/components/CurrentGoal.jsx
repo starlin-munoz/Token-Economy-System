@@ -1,12 +1,7 @@
-import React, { useState, useRef } from 'react';
-
-function CurrentGoal({ currentGoalTokens, setCurrentGoalTokens, selected, awardedTokens, setAwardedTokens, maxTokens, setMaxTokens }) {
+function CurrentGoal({ currentGoalTokens, setCurrentGoalTokens, selected, awardedTokens, setAwardedTokens, maxTokens, setMaxTokens, popUp, setPopUp }) {
 
     // State to track awarded tokens 
     const tokens = currentGoalTokens.length;
-
-    // State to handle popup when goal is met
-    const [popUp, setPopUp] = useState(false);
 
     // Function to handle awarding a token
     const handleAwardToken = () => {
@@ -18,13 +13,14 @@ function CurrentGoal({ currentGoalTokens, setCurrentGoalTokens, selected, awarde
         // Add token to current goal
         setCurrentGoalTokens(prev => {
             const updatedGoalTokens = [...prev, selected];
+            // If the goal is met, show the pop-up
             if (updatedGoalTokens.length === maxTokens) {
                 setPopUp(true);
             }
             return updatedGoalTokens;
         });
         setAwardedTokens(prev => [...prev, selected]);
-    };
+    }
 
     // Function to reset awarded tokens
     const resetTokenBoard = () => {
@@ -38,7 +34,7 @@ function CurrentGoal({ currentGoalTokens, setCurrentGoalTokens, selected, awarde
         setMaxTokens(goal); // Update maxTokens state
         setCurrentGoalTokens([]); // Reset tokens when goal changes
         setPopUp(false); // Return popUp state to false
-    };
+    }
 
     return (
         <>
@@ -108,7 +104,7 @@ function CurrentGoal({ currentGoalTokens, setCurrentGoalTokens, selected, awarde
 
                     <div className="popup-container">
                         <h2>🎉 Congratulations! 🎉</h2>
-                        <p>You reached your token goal of {maxTokens}!</p>
+                        <p>You reached the token goal of {maxTokens}!</p>
                         <button className="close-btn" onClick={() => setPopUp(false)}>Close</button>
                     </div>
                 </div>

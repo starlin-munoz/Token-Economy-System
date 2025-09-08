@@ -1,17 +1,16 @@
-.token-btn{
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  margin-top: 15px;
-  color: black;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
+.token-btn {
   display: inline-flex;
   align-items: center;
-  font-size: 16px;
+  justify-content: center;
+  text-align: center;
+  margin-top: 1rem;
+  color: black;
+  border: none;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
   width: 100%;
 }
 
@@ -23,86 +22,27 @@
   background-color: lightcoral;
 }
 
-select,
-::picker(select) {
-  appearance: base-select;
-  font-size: 14px;
-}
-
 select {
-  flex: 1;
-}
-
-select {
+  font-size: 0.875rem;
   border: 2px solid #ddd;
-  background: #eee;
-  margin-left: 10px;
-  transition: 0.4s;
-
+  background-color: #eee;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  transition: background 0.4s ease;
+  width: 100%;
+  appearance: none;
 }
 
 select:hover,
 select:focus {
-  background: #ddd;
-}
-
-select::picker-icon {
-  color: #999;
-  transition: 0.4s rotate;
-}
-
-select:open::picker-icon {
-  rotate: 180deg;
-}
-
-::picker(select) {
-  border: none;
+  background-color: #ddd;
+  outline: none;
 }
 
 option {
-  display: flex;
-  justify-content: flex-start;
-
-  border: 2px solid #ddd;
-  background: #eee;
-  padding: 10px;
-  transition: 0.4s;
-}
-
-option:first-of-type {
-  border-radius: 8px 8px 0 0;
-}
-
-option:last-of-type {
-  border-radius: 0 0 8px 8px;
-}
-
-option:not(option:last-of-type) {
-  border-bottom: none;
-}
-
-option:nth-of-type(odd) {
-  background: #fff;
-}
-
-option:hover,
-option:focus {
-  background: rgb(133, 245, 133);
-}
-
-option .icon {
-  font-size: 1.6rem;
-  text-box: trim-both cap alphabetic;
-}
-
-option:checked {
-  font-weight: bold;
-}
-
-option::checkmark {
-  order: 1;
-  margin-left: auto;
-  content: "✅";
+  font-size: 1rem;
+  color: #333;
+  background-color: #fff;
 }
 
 .popup-backdrop {
@@ -123,10 +63,11 @@ option::checkmark {
   position: relative;
   background-color: white;
   padding: 2rem;
-  border-radius: 10px;
+  border-radius: 0.625rem;
   text-align: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  max-width: 300px;
+  box-shadow: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.3);
+  max-width: 18.75rem;
+  width: 90%;
   z-index: 10;
 }
 
@@ -136,7 +77,7 @@ option::checkmark {
     opacity: 1;
   }
   50% {
-    transform: translateY(-10px) rotate(5deg);
+    transform: translateY(-0.625rem) rotate(5deg);
     opacity: 0.8;
   }
   100% {
@@ -145,56 +86,50 @@ option::checkmark {
   }
 }
 
-.star-1 {
+.star-1,
+.star-2,
+.star-3,
+.star-4,
+.star-5,
+.star-6 {
   position: absolute;
+  font-size: 3.125rem;
+  z-index: 1;
+  animation: float ease-in-out infinite;
+}
+
+.star-1 {
   top: 20%;
   left: 20%;
-  font-size: 50px;
-  z-index: 1;
-  animation: float 2.5s ease-in-out infinite;
+  animation-duration: 2.5s;
 }
 
 .star-2 {
-  position: absolute;
   top: 15%;
   right: 20%;
-  font-size: 50px;
-  z-index: 1;
-  animation: float 3s ease-in-out infinite;
+  animation-duration: 3s;
 }
 
 .star-3 {
-  position: absolute;
   bottom: 10%;
   left: 25%;
-  font-size: 50px;
-  z-index: 1;
-  animation: float 2.8s ease-in-out infinite;
+  animation-duration: 2.8s;
 }
 
 .star-4 {
-  position: absolute;
   bottom: 15%;
   right: 15%;
-  font-size: 50px;
-  z-index: 1;
-  animation: float 2.7s ease-in-out infinite;
+  animation-duration: 2.7s;
 }
 
 .star-5 {
-  position: absolute;
   top: 5%;
   right: 5%;
-  font-size: 50px;
-  z-index: 1;
-  animation: float 3.2s ease-in-out infinite;
+  animation-duration: 3.2s;
 }
 
 .star-6 {
-  position: absolute;
   bottom: 5%;
   left: 10%;
-  font-size: 50px;
-  z-index: 1;
-  animation: float 3s ease-in-out infinite;
+  animation-duration: 3s;
 }
