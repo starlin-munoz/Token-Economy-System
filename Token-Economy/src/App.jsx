@@ -5,6 +5,7 @@ import './styles/ClientProfile.css';
 import './styles/CurrentGoal.css';
 import './styles/RewardStore.css';
 import './styles/SelectToken.css';
+import './styles/Login.css';
 import TokenEconomy from './components/TokenEconomy';
 import Login from './components/Login';
 
