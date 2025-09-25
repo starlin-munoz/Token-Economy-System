@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ChildProfile from './ClientProfile';
-import SelectToken from './SelectToken';
-import CurrentGoal from './CurrentGoal';
-import RewardStore from './RewardStore';
+import ChildProfile from '../components/ClientProfile';
+import SelectToken from '../components/SelectToken';
+import CurrentGoal from '../components/CurrentGoal';
+import RewardStore from '../components/RewardStore';
 
 function TokenEconomy() {
 
