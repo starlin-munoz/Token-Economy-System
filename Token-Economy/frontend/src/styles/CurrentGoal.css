@@ -66,7 +66,7 @@ option {
   border-radius: 0.625rem;
   text-align: center;
   box-shadow: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.3);
-  max-width: 18.75rem;
+  max-width: 90%;
   width: 90%;
   z-index: 10;
 }
@@ -93,7 +93,7 @@ option {
 .star-5,
 .star-6 {
   position: absolute;
-  font-size: 3.125rem;
+  font-size: 3rem;
   z-index: 1;
   animation: float ease-in-out infinite;
 }
@@ -132,4 +132,24 @@ option {
   bottom: 5%;
   left: 10%;
   animation-duration: 3s;
+}
+
+@media (max-width: 768px) {
+  .token-btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .popup-container {
+    padding: 1.5rem;
+  }
+
+  .star-1,
+  .star-2,
+  .star-3,
+  .star-4,
+  .star-5,
+  .star-6 {
+    font-size: 2rem;
+  }
 }
