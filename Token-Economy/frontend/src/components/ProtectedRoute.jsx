@@ -36,10 +36,10 @@ function ProtectedRoute({ children }) {
             return;
         }
         const decoded = jwtDecode(token);
-        const tokenExperation = decoded.exp;
+        const tokenExpiration = decoded.exp;
         const now = Date.now() / 1000;
 
-        if (tokenExperation < now) {
+        if (tokenExpiration < now) {
             await refreshToken();
         } else {
             setIsAuthorized(true);

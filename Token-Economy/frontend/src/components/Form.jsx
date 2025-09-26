@@ -3,6 +3,7 @@ import api from '../api';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import { useNavigate } from "react-router-dom";
 import '../styles/Form.css';
+import authApi from '../authApi';
 
 function Form({ route, method }) {
 
@@ -19,7 +20,7 @@ function Form({ route, method }) {
         e.preventDefault();
 
         try {
-            const res = await api.post(route, { username, password });
+            const res = await authApi.post(route, { username, password });
             if (method === "login") {
                 localStorage.setItem(ACCESS_TOKEN, res.data.access);
                 localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
@@ -29,8 +30,7 @@ function Form({ route, method }) {
             }
 
         } catch (error) {
-            console.log("VITE_API_URL:", import.meta.env.VITE_API_URL);
-            alert(error);
+            console.log(error);
         } finally {
             setLoading(false);
         }
