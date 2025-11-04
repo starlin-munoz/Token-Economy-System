@@ -1,3 +1,4 @@
+# === FRONTEND (React/Vite) ===
 # Logs
 logs
 *.log
@@ -7,6 +8,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Node
 node_modules
 dist
 dist-ssr
@@ -22,3 +24,57 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# === BACKEND (Django) ===
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.py.class
+
+# Django
+*.sqlite3
+db.sqlite3
+/media/
+staticfiles/
+*.pot
+*.pyc
+
+# Environment & secrets
+.env
+*.env
+.env.*
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# Migrations (optional — keep if you’re sharing schema)
+# */migrations/
+# !*/migrations/__init__.py
+
+# IDE / OS junk
+*.bak
+Thumbs.db
+
+# === Deployment / Build ===
+# Compiled
+*.egg
+*.egg-info/
+build/
+develop-eggs/
+.eggs/
+.installed.cfg
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.manifest
+*.spec
