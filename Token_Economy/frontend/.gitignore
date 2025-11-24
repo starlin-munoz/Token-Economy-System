@@ -78,3 +78,6 @@ pip-wheel-metadata/
 share/python-wheels/
 *.manifest
 *.spec
+env/
+venv/
+*.env
