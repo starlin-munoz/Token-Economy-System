@@ -3,6 +3,7 @@ from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
 import dj_database_url
+from corsheaders.defaults import default_headers, default_methods
 
 # Load environment variables from .env
 load_dotenv()
@@ -12,13 +13,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "unsafe-default-key")
-DEBUG = os.environ.get("DEBUG", "False") == "True"
+DEBUG = True
 
 # Hosts
+# Updated to correctly allow Render deployment
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "token-economy.onrender.com",
+    "token-economy-backend.onrender.com",
+    "token-economy-system.onrender.com", 
+    ".onrender.com",
+    ".render.com",
 ]
 
 # Applications
@@ -34,6 +39,7 @@ INSTALLED_APPS = [
     "api",
 ]
 
+# Middleware
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
@@ -102,9 +108,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated",
-    ],
+    # permission_classes should be set per view
 }
 
 SIMPLE_JWT = {
@@ -114,20 +118,23 @@ SIMPLE_JWT = {
 
 # CORS / CSRF
 CORS_ALLOWED_ORIGINS = [
-    "https://token-economy.onrender.com",
-    "https://www.token-economy.onrender.com",
     "https://token-economy-system.vercel.app",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
+
+# Updated to include backend URL to prevent 400/403 CSRF errors
 CSRF_TRUSTED_ORIGINS = [
-    "https://token-economy.onrender.com",
-    "https://www.token-economy.onrender.com",
     "https://token-economy-system.vercel.app",
+    "https://token-economy-system.onrender.com",
 ]
+
+CORS_ALLOW_HEADERS = list(default_headers)
+CORS_ALLOW_METHODS = list(default_methods)
 CORS_ALLOW_CREDENTIALS = True
 
 # Default primary key
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"

@@ -78,13 +78,11 @@ function CurrentGoal({ currentGoalTokens, setCurrentGoalTokens, selected, awarde
                 <div className="component-box">
                     <button className="award-token token-btn" onClick={handleAwardToken} disabled={tokens >= maxTokens}>
                         <strong>
-                            <img src="./images/medal-emoji.png" alt="Award" width="16" height="16" />
                             Award Token
                         </strong>
                     </button>
                     <button className="reset-token-board token-btn" onClick={resetTokenBoard}>
                         <strong>
-                            <img src="./images/ResetTokens.png" alt="Reset" width="16" height="16" />
                             Reset Token Board
                         </strong>
                     </button>
@@ -116,4 +114,5 @@ function CurrentGoal({ currentGoalTokens, setCurrentGoalTokens, selected, awarde
         </>
     );
 };
-export default CurrentGoal; 
+
+export default CurrentGoal;

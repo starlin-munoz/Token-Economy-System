@@ -2,12 +2,6 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
 from django.core.validators import RegexValidator
-import string
-import random
-
-def generate_random_password(length=12):
-    chars = string.ascii_letters + string.digits + "!@#$%^&*()"
-    return ''.join(random.choice(chars) for _ in range(length))
 
 class UserSerializer(serializers.ModelSerializer):
     username = serializers.CharField(
@@ -31,9 +25,8 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('username', 'password')
 
     def create(self, validated_data):
-        password = validated_data['password']
         user = User.objects.create_user(
             username=validated_data['username'],
-            password=password
+            password=validated_data['password']
         )
         return user

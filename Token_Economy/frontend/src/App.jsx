@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import './index.css';
 import './styles/ClientProfile.css';
@@ -11,24 +11,16 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Register from './pages/Register';
 import Login from './pages/Login';
 
-function RegisterAndLogout() {
-  localStorage.clear();
-  return <Register />;
-}
-
 function App() {
-
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<ProtectedRoute><TokenEconomy /></ProtectedRoute>} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </>
+    <BrowserRouter basename="/Token-Economy-System">
+      <Routes>
+        <Route path="/" element={<ProtectedRoute><TokenEconomy /></ProtectedRoute>} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

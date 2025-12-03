@@ -67,10 +67,11 @@ function Form({ route, method }) {
                 setSuccess("Account created successfully! You can now log in.");
             }
         } catch (err) {
-            if (method === "register" && err.response) {
-                setError(err.response.data?.username || "Registration failed");
+            // User-friendly error messages
+            if (method === "register") {
+                setError("Registration failed. Please make sure your username and password are valid.");
             } else {
-                setError("Login failed");
+                setError("Login failed. Please check your username and password.");
             }
         } finally {
             setLoading(false);
@@ -109,19 +110,16 @@ function Form({ route, method }) {
                         {name}
                     </button>
 
-                    {/* Move error and success messages below the submit button */}
                     {error && <p className="error-msg" style={{ marginTop: '0.5rem' }}>{error}</p>}
                     {success && <p className="success-msg" style={{ marginTop: '0.5rem' }}>{success}</p>}
                 </div>
 
-                {/* Show register link only on login form */}
                 {method === "login" && (
                     <p className="switch-form">
                         Don't have an account? <Link to="/register">Register here</Link>
                     </p>
                 )}
 
-                {/* Show login link only on register form */}
                 {method === "register" && (
                     <p className="switch-form">
                         Already have an account? <Link to="/login">Login here</Link>
