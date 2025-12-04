@@ -13,7 +13,7 @@ import Login from './pages/Login';
 
 function App() {
   return (
-    <BrowserRouter basename="/Token-Economy-System">
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<ProtectedRoute><TokenEconomy /></ProtectedRoute>} />
         <Route path="/register" element={<Register />} />
