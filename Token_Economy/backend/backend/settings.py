@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "unsafe-default-key")
-DEBUG = True
+DEBUG = False
 
 # Hosts
 # Updated to correctly allow Render deployment
