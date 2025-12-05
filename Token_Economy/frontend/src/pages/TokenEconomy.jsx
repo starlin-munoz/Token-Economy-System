@@ -1,14 +1,10 @@
 import { useState, useEffect, use } from 'react';
-import { useNavigate } from 'react-router-dom';
 import ChildProfile from '../components/ClientProfile';
 import SelectToken from '../components/SelectToken';
 import CurrentGoal from '../components/CurrentGoal';
 import RewardStore from '../components/RewardStore';
-import { useLocation } from 'react-router-dom';
 
 function TokenEconomy() {
-    const location = useLocation();
-    const { userName } = location.state || {};
 
     // State to handle popup when goal is met
     const [popUp, setPopUp] = useState(false);
@@ -41,25 +37,12 @@ function TokenEconomy() {
     // State to track max tokens needed to achieve the current goal
     const [maxTokens, setMaxTokens] = useState(1);
 
-    // Allows for navigation between pages
-    const navigate = useNavigate();
-
-    // Function to navigate to login page
-    function Logout() {
-        localStorage.clear();
-        navigate("/login");
-    }
-
     return (
         <div>
             <div className="header-container">
                 <h1 className="title">⭐ABA Token Economy System</h1>
-                <button className="logout-btn" onClick={Logout}>
-                    Logout
-                </button>
             </div>
             <p>Reinforcing positive behaviors through visual rewards</p>
-            <h2>Welcome, {userName}!</h2>
             <div className="wrapper">
                 <div className="left-align">
                     <section><ChildProfile 
