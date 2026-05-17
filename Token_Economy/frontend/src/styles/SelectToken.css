@@ -1,51 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap');
+
 .token {
   font-size: 2.5rem;
   padding: 0.4rem;
   margin: 0.25rem;
   cursor: pointer;
   background-color: transparent;
-  border: 0.1rem solid transparent;
-  border-radius: 0.4rem;
-  transition: all 0.2s ease;
+  border: 0.15rem solid transparent;
+  border-radius: 1rem;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.2s ease,
+              background-color 0.2s ease,
+              border-color 0.2s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.12));
 }
 
 .token:hover {
-  background-color: #f1f1f1;
+  background-color: #f3eaff;
+  border-color: #d0b8ff;
+  transform: translateY(-3px) scale(1.15) rotate(-5deg);
+  filter: drop-shadow(0 5px 8px rgba(124, 77, 255, 0.25));
+}
+
+.token:active {
+  transform: scale(0.92);
 }
 
 .token.selected {
-  background-color: #d1e7dd;
-  border: 0.15rem solid #0f5132;
+  background: linear-gradient(135deg, #bbf7d0, #86efac);
+  border: 0.2rem solid #22c55e;
+  box-shadow: 0 4px 0 #16a34a;
+  transform: scale(1.08);
+  filter: drop-shadow(0 4px 6px rgba(34, 197, 94, 0.3));
 }
 
 .token-0 {
-  background-color: #fce5cd;
+  background: linear-gradient(135deg, #ffe082, #ffd54f);
+  border-color: #f9a825;
 }
 
 .token-1 {
-  background-color: #d9ead3;
+  background: linear-gradient(135deg, #b5f7a0, #6fe88a);
+  border-color: #4caf50;
 }
 
 .token-2 {
-  background-color: #cfe2f3;
+  background: linear-gradient(135deg, #b3e5fc, #64b5f6);
+  border-color: #1e88e5;
 }
 
 .token-3 {
-  background-color: #e2cfcf;
+  background: linear-gradient(135deg, #ffd0d0, #ff8a80);
+  border-color: #f06292;
 }
 
 .token-4 {
-  background-color: #f9cb9c;
+  background: linear-gradient(135deg, #e1d5f7, #b39ddb);
+  border-color: #7c4dff;
 }
 
 .custom-token {
-  background-color: lightgray;
+  background: linear-gradient(135deg, #e8d5ff, #d0b8ff);
+  border-color: #7c4dff;
   min-width: 3rem;
   min-height: 3rem;
+  font-family: 'Fredoka One', cursive;
 }
 
 @media (max-width: 768px) {

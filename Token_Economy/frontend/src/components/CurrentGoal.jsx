@@ -30,11 +30,13 @@ function CurrentGoal({ currentGoalTokens, setCurrentGoalTokens, selected, awarde
 
     // Function to handle dropdown changes
     const handleDropdown = (e) => {
-        const goal = parseInt(e.target.value); // Convert the goal from string to integer
+        const goal = parseInt(e.target.value, 10); // Convert the goal from string to integer
         setMaxTokens(goal); // Update maxTokens state
         setCurrentGoalTokens([]); // Reset tokens when goal changes
         setPopUp(false); // Return popUp state to false
     }
+
+    const selectedProfileName = profile.find(p => p.id === selectedProfile)?.name;
 
     return (
         <>
@@ -104,7 +106,7 @@ function CurrentGoal({ currentGoalTokens, setCurrentGoalTokens, selected, awarde
                         <h2>🎉 Congratulations! 🎉</h2>
                         <p>
                             {selectedProfile !== null
-                                ? `${profile[selectedProfile]?.name} reached the token goal of ${maxTokens}!`
+                                ? `${selectedProfileName} reached the token goal of ${maxTokens}!`
                                 : `You reached the token goal of ${maxTokens}!`}
                         </p>
                         <button className="close-btn" onClick={() => setPopUp(false)}>Close</button>

@@ -1,5 +1,5 @@
-import { useState, useEffect, use } from 'react';
-import ChildProfile from '../components/ClientProfile';
+import { useState, useEffect } from 'react';
+import ClientProfile from '../components/ClientProfile';
 import SelectToken from '../components/SelectToken';
 import CurrentGoal from '../components/CurrentGoal';
 import RewardStore from '../components/RewardStore';
@@ -21,7 +21,7 @@ function TokenEconomy() {
     // State to manage saved profile info
     const [profile, setProfile] = useState([]);
 
-    // State to manage awarded tokens 
+    // State to manage awarded tokens
     // We use localStorage to keep token amount even if board reset
     // Token amount should only decrease if used to redeem rewards
     const [awardedTokens, setAwardedTokens] = useState(() => {
@@ -45,12 +45,14 @@ function TokenEconomy() {
             <p>Reinforcing positive behaviors through visual rewards</p>
             <div className="wrapper">
                 <div className="left-align">
-                    <section><ChildProfile 
-                        selectedProfile={selectedProfile}
-                        setSelectedProfile={setSelectedProfile}
-                        profile={profile}
-                        setProfile={setProfile}
-                    /></section>
+                    <section>
+                        <ClientProfile
+                            selectedProfile={selectedProfile}
+                            setSelectedProfile={setSelectedProfile}
+                            profile={profile}
+                            setProfile={setProfile}
+                        />
+                    </section>
                     <section>
                         <SelectToken
                             selectedToken={selectedToken}
@@ -63,15 +65,13 @@ function TokenEconomy() {
                             setCurrentGoalTokens={setCurrentGoalTokens}
                             selected={selectedToken}
                             awardedTokens={awardedTokens}
-                            maxTokens={maxTokens}
                             setAwardedTokens={setAwardedTokens}
+                            maxTokens={maxTokens}
                             setMaxTokens={setMaxTokens}
                             popUp={popUp}
                             setPopUp={setPopUp}
-                            setSelectedProfile={setSelectedProfile}
                             selectedProfile={selectedProfile}
                             profile={profile}
-                            setProfile={setProfile}
                         />
                     </section>
                 </div>

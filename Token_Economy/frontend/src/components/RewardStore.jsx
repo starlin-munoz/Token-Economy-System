@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 function RewardStore({ awardedTokens, setAwardedTokens }) {
 
@@ -20,6 +20,11 @@ function RewardStore({ awardedTokens, setAwardedTokens }) {
     // State to manage pop-up messages
     const [popUp, setPopUp] = useState({ message: '', visible: false });
 
+    const timeoutRef = useRef(null);
+    const idRef = useRef(0);
+
+    useEffect(() => () => clearTimeout(timeoutRef.current), []);
+
     // Function to handle adding a new reward
     const handleAddReward = () => {
         setShowRewardForm(true);
@@ -29,13 +34,14 @@ function RewardStore({ awardedTokens, setAwardedTokens }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const cost = parseInt(newRewardCost);
+        const cost = parseInt(newRewardCost, 10);
 
-        if (newReward.trim() === '') {
+        if (newReward.trim() === '' || isNaN(cost) || cost < 1) {
             return;
         }
 
         const reward = {
+            id: idRef.current++,
             name: newReward,
             cost: cost
         };
@@ -56,24 +62,24 @@ function RewardStore({ awardedTokens, setAwardedTokens }) {
     };
 
     // Function to remove rewards
-    const handleRemoveReward = (index) => {
+    const handleRemoveReward = (id) => {
         // Remove the reward from the list
-        setRewards(prev => prev.filter((_, i) => i !== index));
+        setRewards(prev => prev.filter(r => r.id !== id));
     };
 
     // Function for pop-ups
     const showPopUp = (message) => {
         setPopUp({ message, visible: true });
-
-        setTimeout(() => {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = setTimeout(() => {
             setPopUp({ message: '', visible: false });
         }, 3000);
     }
 
     // Function to redeem rewards
-    const handleRedeemReward = (index) => {
+    const handleRedeemReward = (id) => {
         // Logic to redeem the reward
-        const reward = rewards[index];
+        const reward = rewards.find(r => r.id === id);
         // Check if user has enough tokens
         if (currentTokens >= reward.cost) {
             const updatedTokens = [...awardedTokens];
@@ -81,7 +87,7 @@ function RewardStore({ awardedTokens, setAwardedTokens }) {
             updatedTokens.splice(0, reward.cost);
             setAwardedTokens(updatedTokens);
             // Deduct tokens and remove reward
-            setRewards(prev => prev.filter((_, i) => i !== index));
+            setRewards(prev => prev.filter(r => r.id !== id));
             showPopUp('🎉 Reward redeemed successfully!');
         } else {
             // Show message or handle insufficient tokens
@@ -126,12 +132,12 @@ function RewardStore({ awardedTokens, setAwardedTokens }) {
                 )}
 
                 <ul className="reward-list">
-                    {rewards.map((reward, index) => (
-                        <li key={index} className="reward-item">
-                            <span>{reward.name} - {reward.cost}</span>
+                    {rewards.map((reward) => (
+                        <li key={reward.id} className="reward-item">
+                            <span>{reward.name} - {reward.cost} 🪙</span>
                             <div className="reward-actions">
-                                <button className="reward-btn redeem" onClick={() => handleRedeemReward(index)}>Redeem</button>
-                                <button className="remove reward-btn" onClick={() => handleRemoveReward(index)}>Remove</button>
+                                <button className="reward-btn redeem" onClick={() => handleRedeemReward(reward.id)}>Redeem</button>
+                                <button className="remove reward-btn" onClick={() => handleRemoveReward(reward.id)}>Remove</button>
                             </div>
                         </li>
                     ))}
@@ -144,4 +150,4 @@ function RewardStore({ awardedTokens, setAwardedTokens }) {
         </>
     );
 };
-export default RewardStore; 
+export default RewardStore;

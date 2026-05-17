@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 function ClientProfile({ selectedProfile, setSelectedProfile, profile, setProfile }) {
 
@@ -14,17 +14,22 @@ function ClientProfile({ selectedProfile, setSelectedProfile, profile, setProfil
     // State to manage clients age
     const [clientAge, setClientAge] = useState('');
 
+    const idRef = useRef(0);
+
     // Function to handle profile selection
-    const handleProfileSelect = (index) => {
-        setSelectedProfile(selectedProfile === index ? null : index);
+    const handleProfileSelect = (id) => {
+        setSelectedProfile(selectedProfile === id ? null : id);
     };
 
     // Function to handle submission
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        if (clientName.trim() === '') return;
+
         // Save profile information
         const newProfile = {
+            id: idRef.current++,
             name: clientName,
             gender: clientGender,
             age: clientAge
@@ -105,11 +110,11 @@ function ClientProfile({ selectedProfile, setSelectedProfile, profile, setProfil
                 )}
 
                 <div className="profiles-list">
-                    {profile.length > 0 && profile.map((p, i) => (
+                    {profile.length > 0 && profile.map((p) => (
                         <div
-                            key={i}
-                            className={`profile-card ${selectedProfile === i ? 'selected' : ''}`}
-                            onClick={() => handleProfileSelect(i)}
+                            key={p.id}
+                            className={`profile-card ${selectedProfile === p.id ? 'selected' : ''}`}
+                            onClick={() => handleProfileSelect(p.id)}
                         >
                             <div className="profile-emoji">{getGenderEmoji(p.gender)}</div>
                             <div className="profile-info">
@@ -119,8 +124,8 @@ function ClientProfile({ selectedProfile, setSelectedProfile, profile, setProfil
                                 className="remove-btn"
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    setProfile(profile.filter((_, idx) => idx !== i));
-                                    if (selectedProfile === i) { setSelectedProfile(null); }
+                                    setProfile(profile.filter(pr => pr.id !== p.id));
+                                    if (selectedProfile === p.id) { setSelectedProfile(null); }
                                 }}
                                 aria-label={`Remove profile ${p.name}`}
                             >

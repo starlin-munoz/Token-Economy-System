@@ -26,6 +26,10 @@ function SelectToken({ selectedToken, setSelectedToken }) {
 
     // Function to handle custom token click
     const handleCustomTokenClick = () => {
+        if (selectedToken === customToken) {
+            setSelectedToken(null);
+            return;
+        }
         setShowEmojiPicker(true);
     };
 
@@ -52,15 +56,21 @@ function SelectToken({ selectedToken, setSelectedToken }) {
                 </button>
 
                 {showEmojiPicker && (
-                    <div className="emoji-picker-popup">
-                        <EmojiPicker onEmojiClick={handleCustomTokenChange} />
-                        <button className="close-picker" onClick={() => setShowEmojiPicker(false)}>
-                            Cancel
-                        </button>
-                    </div>
+                    <>
+                        <div
+                            style={{ position: 'fixed', inset: 0, zIndex: 99 }}
+                            onClick={() => setShowEmojiPicker(false)}
+                        />
+                        <div className="emoji-picker-popup" style={{ position: 'relative', zIndex: 100 }}>
+                            <EmojiPicker onEmojiClick={handleCustomTokenChange} />
+                            <button className="close-picker" onClick={() => setShowEmojiPicker(false)}>
+                                Cancel
+                            </button>
+                        </div>
+                    </>
                 )}
             </div>
         </>
     );
 };
-export default SelectToken; 
+export default SelectToken;
