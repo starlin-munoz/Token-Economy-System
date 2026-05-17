@@ -39,11 +39,11 @@ function TokenEconomy() {
 
     return (
         <div>
-            <div className="header-container">
-                <h1 className="title">⭐ABA Token Economy System</h1>
-            </div>
-            <p>Reinforcing positive behaviors through visual rewards</p>
             <div className="wrapper">
+                <div className="header-container">
+                    <h1 className="title">⭐ABA Token Economy System</h1>
+                    <p className="subtitle">Reinforcing positive behaviors through visual rewards</p>
+                </div>
                 <div className="left-align">
                     <section>
                         <ClientProfile
