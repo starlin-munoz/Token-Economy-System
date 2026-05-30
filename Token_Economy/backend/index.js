@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3001;
 app.use(cors({
     origin: [
         'http://localhost:5173',
-        'https://token-economy-system.vercel.app'
+        process.env.FRONTEND_URL
     ]
 }));
 app.use(express.json());
