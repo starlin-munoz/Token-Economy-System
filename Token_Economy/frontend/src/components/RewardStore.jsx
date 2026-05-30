@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { api } from '../api';
 
-function RewardStore({ awardedTokens, setAwardedTokens }) {
+function RewardStore({ awardedTokens, setAwardedTokens, selectedProfile }) {
 
     // Current amount of tokens user has
     const currentTokens = awardedTokens.length;
@@ -14,16 +15,32 @@ function RewardStore({ awardedTokens, setAwardedTokens }) {
     // State to manage new reward input
     const [newReward, setNewReward] = useState('');
 
-    // State to manage reward cost 
+    // State to manage reward cost
     const [newRewardCost, setNewRewardCost] = useState('');
 
     // State to manage pop-up messages
     const [popUp, setPopUp] = useState({ message: '', visible: false });
 
     const timeoutRef = useRef(null);
-    const idRef = useRef(0);
 
     useEffect(() => () => clearTimeout(timeoutRef.current), []);
+
+    // Load rewards from the database when a client is selected
+    useEffect(() => {
+        if (!selectedProfile) {
+            setRewards([]);
+            return;
+        }
+
+        const loadRewards = async () => {
+            const result = await api.getRewards(selectedProfile);
+            if (!result.error) {
+                setRewards(result);
+            }
+        };
+
+        loadRewards();
+    }, [selectedProfile]);
 
     // Function to handle adding a new reward
     const handleAddReward = () => {
@@ -31,7 +48,7 @@ function RewardStore({ awardedTokens, setAwardedTokens }) {
     };
 
     // Function to handle form submission
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const cost = parseInt(newRewardCost, 10);
@@ -40,14 +57,13 @@ function RewardStore({ awardedTokens, setAwardedTokens }) {
             return;
         }
 
-        const reward = {
-            id: idRef.current++,
-            name: newReward,
-            cost: cost
-        };
+        const reward = await api.createReward(selectedProfile, newReward, cost);
 
-        // Add the reward to the list 
+        if (reward.error) return;
+
+        // Add the reward to the list
         setRewards(prev => [...prev, reward]);
+
         // Reset the form and make it invisible
         setNewReward('');
         setNewRewardCost('');
@@ -62,7 +78,9 @@ function RewardStore({ awardedTokens, setAwardedTokens }) {
     };
 
     // Function to remove rewards
-    const handleRemoveReward = (id) => {
+    const handleRemoveReward = async (id) => {
+        await api.deleteReward(id);
+
         // Remove the reward from the list
         setRewards(prev => prev.filter(r => r.id !== id));
     };
@@ -74,25 +92,32 @@ function RewardStore({ awardedTokens, setAwardedTokens }) {
         timeoutRef.current = setTimeout(() => {
             setPopUp({ message: '', visible: false });
         }, 3000);
-    }
+    };
 
     // Function to redeem rewards
-    const handleRedeemReward = (id) => {
-        // Logic to redeem the reward
+    const handleRedeemReward = async (id) => {
         const reward = rewards.find(r => r.id === id);
+
         // Check if user has enough tokens
-        if (currentTokens >= reward.cost) {
-            const updatedTokens = [...awardedTokens];
-            // Remove the used tokens from the user's total
-            updatedTokens.splice(0, reward.cost);
-            setAwardedTokens(updatedTokens);
-            // Deduct tokens and remove reward
-            setRewards(prev => prev.filter(r => r.id !== id));
-            showPopUp('🎉 Reward redeemed successfully!');
-        } else {
-            // Show message or handle insufficient tokens
+        if (currentTokens < reward.cost) {
             showPopUp('❌ Not enough tokens to redeem this reward.');
+            return;
         }
+
+        const result = await api.redeemReward(id);
+
+        if (result.error) {
+            showPopUp('❌ Not enough tokens to redeem this reward.');
+            return;
+        }
+
+        // Deduct tokens from the bank
+        setAwardedTokens(prev => prev.slice(0, prev.length - reward.cost));
+
+        // Remove reward from the list
+        setRewards(prev => prev.filter(r => r.id !== id));
+
+        showPopUp('🎉 Reward redeemed successfully!');
     };
 
     return (
@@ -146,8 +171,9 @@ function RewardStore({ awardedTokens, setAwardedTokens }) {
                 {!showRewardForm && (
                     <button className="add-reward" onClick={handleAddReward}>Add Reward</button>
                 )}
-            </div >
+            </div>
         </>
     );
 };
+
 export default RewardStore;

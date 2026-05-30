@@ -1,14 +1,21 @@
-function CurrentGoal({ currentGoalTokens, setCurrentGoalTokens, selected, awardedTokens, setAwardedTokens, maxTokens, setMaxTokens, popUp, setPopUp, selectedProfile, setSelectedProfile, profile, setProfile }) {
+import { api } from '../api';
 
-    // State to track awarded tokens 
+function CurrentGoal({ currentGoalTokens, setCurrentGoalTokens, selected, awardedTokens, setAwardedTokens, maxTokens, setMaxTokens, popUp, setPopUp, selectedProfile, profile, sessionId, onSessionComplete }) {
+
+    // State to track awarded tokens
     const tokens = currentGoalTokens.length;
 
     // Function to handle awarding a token
-    const handleAwardToken = () => {
-        // If no token is selected or the current goal is met
-        if (!selected || tokens >= maxTokens) {
+    const handleAwardToken = async () => {
+        // If no token is selected, no client is selected, no session, or the current goal is met
+        if (!selected || !selectedProfile || !sessionId || tokens >= maxTokens) {
             return;
         }
+
+        // Award token in the database
+        const result = await api.awardToken(sessionId, selected);
+
+        if (result.error) return;
 
         // Add token to current goal
         setCurrentGoalTokens(prev => {
@@ -19,22 +26,28 @@ function CurrentGoal({ currentGoalTokens, setCurrentGoalTokens, selected, awarde
             }
             return updatedGoalTokens;
         });
+
+        // Add token to bank
         setAwardedTokens(prev => [...prev, selected]);
-    }
+    };
 
     // Function to reset awarded tokens
-    const resetTokenBoard = () => {
+    const resetTokenBoard = async () => {
+        // Complete the current session and start a new one
+        await onSessionComplete(maxTokens);
         setCurrentGoalTokens([]);
         setPopUp(false);
-    }
+    };
 
     // Function to handle dropdown changes
-    const handleDropdown = (e) => {
-        const goal = parseInt(e.target.value, 10); // Convert the goal from string to integer
-        setMaxTokens(goal); // Update maxTokens state
-        setCurrentGoalTokens([]); // Reset tokens when goal changes
-        setPopUp(false); // Return popUp state to false
-    }
+    const handleDropdown = async (e) => {
+        const goal = parseInt(e.target.value, 10);
+        setMaxTokens(goal);
+        setCurrentGoalTokens([]);
+        setPopUp(false);
+        // Complete current session and start a new one with the updated goal
+        await onSessionComplete(goal);
+    };
 
     const selectedProfileName = profile.find(p => p.id === selectedProfile)?.name;
 

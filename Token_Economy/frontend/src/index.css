@@ -78,10 +78,15 @@ html, body {
   margin-top: 0.1rem;
 }
 
+.top-bar {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+
 .logout-btn {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
+  position: static;
   padding: 0.5rem 1.25rem;
   background: linear-gradient(135deg, #ff8a80, #f06292);
   color: white;
@@ -91,7 +96,6 @@ html, body {
   font-family: 'Fredoka One', cursive;
   font-size: 1rem;
   letter-spacing: 0.03em;
-  z-index: 1000;
   white-space: nowrap;
   box-shadow: 0 4px 0 #c62828;
   transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
@@ -174,12 +178,129 @@ html, body {
   .logout-btn {
     padding: 0.4rem 0.9rem;
     font-size: 0.875rem;
-    top: 0.5rem;
-    right: 0.5rem;
   }
 
   .component-header {
     padding: 1rem 1.25rem;
     font-size: 1.1rem;
   }
+}
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.login-card {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(8px);
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  border-radius: 2rem;
+  box-shadow: 0 4px 0 rgba(255, 255, 255, 0.5), 0 8px 24px rgba(0, 0, 0, 0.08);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 420px;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.login-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #3a3a5c;
+}
+
+.login-form input {
+  padding: 0.6rem 0.9rem;
+  border: 2.5px solid #d0b8ff;
+  border-radius: 1rem;
+  font-size: 1rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  color: #3a3a5c;
+  background: white;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-form input:focus {
+  outline: none;
+  border-color: #7c4dff;
+  box-shadow: 0 0 0 3px rgba(124, 77, 255, 0.2);
+}
+
+.login-error {
+  background: #ffe0e0;
+  border: 2px solid #f06292;
+  border-radius: 1rem;
+  padding: 0.6rem 1rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #c62828;
+  text-align: center;
+}
+
+.login-btn {
+  margin-top: 0.5rem;
+  padding: 0.8rem;
+  background: linear-gradient(135deg, #f9a825 0%, #f06292 50%, #7c4dff 100%);
+  color: white;
+  border: none;
+  border-radius: 2rem;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 5px 0 rgba(124, 77, 255, 0.4);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+}
+
+.login-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 0 rgba(124, 77, 255, 0.3);
+}
+
+.login-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 rgba(124, 77, 255, 0.4);
+}
+
+.login-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.toggle-auth-btn {
+  display: block;
+  margin: 1.25rem auto 0 auto;
+  background: none;
+  border: none;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #7c4dff;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.toggle-auth-btn:hover {
+  color: #f06292;
 }

@@ -1,4 +1,5 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
+import { api } from "../api";
 
 function ClientProfile({ selectedProfile, setSelectedProfile, profile, setProfile }) {
 
@@ -14,29 +15,23 @@ function ClientProfile({ selectedProfile, setSelectedProfile, profile, setProfil
     // State to manage clients age
     const [clientAge, setClientAge] = useState('');
 
-    const idRef = useRef(0);
-
     // Function to handle profile selection
     const handleProfileSelect = (id) => {
         setSelectedProfile(selectedProfile === id ? null : id);
     };
 
     // Function to handle submission
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (clientName.trim() === '') return;
 
-        // Save profile information
-        const newProfile = {
-            id: idRef.current++,
-            name: clientName,
-            gender: clientGender,
-            age: clientAge
-        };
+        const newClient = await api.createClient(clientName, clientAge, clientGender);
+
+        if (newClient.error) return;
 
         // Add new client to array of clients
-        setProfile([...profile, newProfile]);
+        setProfile([...profile, newClient]);
 
         // Reset input
         setShowForm(false);
@@ -45,7 +40,20 @@ function ClientProfile({ selectedProfile, setSelectedProfile, profile, setProfil
         setClientAge('');
     };
 
-    // Function to handle emoji based on gender 
+    // Function to handle removing a client
+    const handleRemove = async (e, id) => {
+        e.stopPropagation();
+
+        await api.deleteClient(id);
+
+        setProfile(profile.filter(pr => pr.id !== id));
+
+        if (selectedProfile === id) {
+            setSelectedProfile(null);
+        }
+    };
+
+    // Function to handle emoji based on gender
     const getGenderEmoji = (gender) => {
         switch (gender) {
             case 'male':
@@ -122,11 +130,7 @@ function ClientProfile({ selectedProfile, setSelectedProfile, profile, setProfil
                             </div>
                             <button
                                 className="remove-btn"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    setProfile(profile.filter(pr => pr.id !== p.id));
-                                    if (selectedProfile === p.id) { setSelectedProfile(null); }
-                                }}
+                                onClick={(e) => handleRemove(e, p.id)}
                                 aria-label={`Remove profile ${p.name}`}
                             >
                                 X
@@ -144,4 +148,5 @@ function ClientProfile({ selectedProfile, setSelectedProfile, profile, setProfil
         </>
     );
 };
+
 export default ClientProfile;
