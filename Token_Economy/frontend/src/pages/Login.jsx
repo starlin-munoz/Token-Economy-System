@@ -8,7 +8,24 @@ function Login() {
     const [isRegister, setIsRegister] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [passwordHints, setPasswordHints] = useState({
+        length: false,
+        number: false,
+        special: false,
+    });
     const navigate = useNavigate();
+
+    const handlePasswordChange = (e) => {
+        const val = e.target.value;
+        setPassword(val);
+        if (isRegister) {
+            setPasswordHints({
+                length: val.length >= 8,
+                number: /\d/.test(val),
+                special: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(val),
+            });
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -29,6 +46,12 @@ function Login() {
         localStorage.setItem('token', result.token);
         navigate('/');
     };
+
+    const HintItem = ({ met, text }) => (
+        <div className={`password-hint ${met ? 'met' : ''}`}>
+            {met ? '✅' : '❌'} {text}
+        </div>
+    );
 
     return (
         <div className="login-page">
@@ -57,11 +80,19 @@ function Login() {
                         <input
                             type="password"
                             value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={handlePasswordChange}
                             placeholder="Enter your password"
                             required
                         />
                     </label>
+
+                    {isRegister && (
+                        <div className="password-hints">
+                            <HintItem met={passwordHints.length} text="At least 8 characters" />
+                            <HintItem met={passwordHints.number} text="At least one number" />
+                            <HintItem met={passwordHints.special} text="At least one special character" />
+                        </div>
+                    )}
 
                     {error && (
                         <div className="login-error">

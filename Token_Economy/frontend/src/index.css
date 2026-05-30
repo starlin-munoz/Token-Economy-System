@@ -304,3 +304,25 @@ html, body {
 .toggle-auth-btn:hover {
   color: #f06292;
 }
+
+.password-hints {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 1rem;
+    border: 2px solid #d0b8ff;
+}
+
+.password-hint {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #c62828;
+    transition: color 0.2s ease;
+}
+
+.password-hint.met {
+    color: #2e7d32;
+}
