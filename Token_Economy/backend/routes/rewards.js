@@ -1,10 +1,23 @@
 import express from 'express';
 import pool from '../db/index.js';
 import verifyToken from '../middleware/auth.js';
+import { body, validationResult } from 'express-validator';
 
 const router = express.Router();
 
 router.use(verifyToken);
+
+const rewardValidation = [
+    body('name')
+        .trim()
+        .notEmpty().withMessage('Reward name is required')
+        .isLength({ max: 200 }).withMessage('Reward name cannot exceed 200 characters')
+        .escape(),
+    body('cost')
+        .isInt({ min: 1, max: 100 }).withMessage('Cost must be between 1 and 100'),
+    body('clientId')
+        .isInt({ min: 1 }).withMessage('Invalid client ID'),
+];
 
 router.get('/client/:clientId', async (req, res) => {
     try {
@@ -29,12 +42,13 @@ router.get('/client/:clientId', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
-    const { clientId, name, cost } = req.body;
-
-    if (!clientId || !name || !cost) {
-        return res.status(400).json({ error: 'clientId, name, and cost are required' });
+router.post('/', rewardValidation, async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ error: errors.array()[0].msg });
     }
+
+    const { clientId, name, cost } = req.body;
 
     try {
         const clientCheck = await pool.query(

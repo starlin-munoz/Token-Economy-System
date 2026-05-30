@@ -1,10 +1,26 @@
 import express from 'express';
 import pool from '../db/index.js';
 import verifyToken from '../middleware/auth.js';
+import { body, validationResult } from 'express-validator';
 
 const router = express.Router();
 
 router.use(verifyToken);
+
+const clientValidation = [
+    body('name')
+        .trim()
+        .notEmpty().withMessage('Name is required')
+        .isLength({ max: 100 }).withMessage('Name cannot exceed 100 characters')
+        .escape(),
+    body('age')
+        .optional()
+        .isInt({ min: 0, max: 120 }).withMessage('Age must be between 0 and 120'),
+    body('gender')
+        .optional()
+        .trim()
+        .isIn(['male', 'female', 'other']).withMessage('Invalid gender value'),
+];
 
 router.get('/', async (req, res) => {
     try {
@@ -19,12 +35,13 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
-    const { name, age, gender } = req.body;
-
-    if (!name) {
-        return res.status(400).json({ error: 'Name is required' });
+router.post('/', clientValidation, async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ error: errors.array()[0].msg });
     }
+
+    const { name, age, gender } = req.body;
 
     try {
         const result = await pool.query(

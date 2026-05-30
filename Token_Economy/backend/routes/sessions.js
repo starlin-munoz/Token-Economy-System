@@ -1,17 +1,25 @@
 import express from 'express';
 import pool from '../db/index.js';
 import verifyToken from '../middleware/auth.js';
+import { body, validationResult } from 'express-validator';
 
 const router = express.Router();
 
 router.use(verifyToken);
 
-router.post('/', async (req, res) => {
-    const { clientId, goalTokens } = req.body;
-
-    if (!clientId) {
-        return res.status(400).json({ error: 'clientId is required' });
+router.post('/', [
+    body('clientId')
+        .isInt({ min: 1 }).withMessage('Invalid client ID'),
+    body('goalTokens')
+        .optional()
+        .isInt({ min: 1, max: 10 }).withMessage('Goal must be between 1 and 10'),
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ error: errors.array()[0].msg });
     }
+
+    const { clientId, goalTokens } = req.body;
 
     try {
         const clientCheck = await pool.query(
@@ -35,13 +43,19 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.post('/:id/tokens', async (req, res) => {
+router.post('/:id/tokens', [
+    body('tokenEmoji')
+        .trim()
+        .notEmpty().withMessage('tokenEmoji is required')
+        .isLength({ max: 10 }).withMessage('Invalid token emoji'),
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ error: errors.array()[0].msg });
+    }
+
     const { tokenEmoji } = req.body;
     const sessionId = req.params.id;
-
-    if (!tokenEmoji) {
-        return res.status(400).json({ error: 'tokenEmoji is required' });
-    }
 
     try {
         const sessionCheck = await pool.query(

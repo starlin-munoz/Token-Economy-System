@@ -2,6 +2,7 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import pool from '../db/index.js';
+import { body, validationResult } from 'express-validator';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -23,12 +24,25 @@ const validatePassword = (password) => {
     return errors;
 };
 
-router.post('/register', async (req, res) => {
-    const { email, password } = req.body;
+const authValidation = [
+    body('email')
+        .trim()
+        .isEmail().withMessage('Invalid email address')
+        .isLength({ max: 255 }).withMessage('Email too long')
+        .normalizeEmail(),
+    body('password')
+        .trim()
+        .notEmpty().withMessage('Password is required')
+        .isLength({ max: 128 }).withMessage('Password too long'),
+];
 
-    if (!email || !password) {
-        return res.status(400).json({ error: 'Email and password required' });
+router.post('/register', authValidation, async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ error: errors.array()[0].msg });
     }
+
+    const { email, password } = req.body;
 
     const passwordErrors = validatePassword(password);
     if (passwordErrors.length > 0) {
@@ -65,12 +79,13 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-        return res.status(400).json({ error: 'Email and password required' });
+router.post('/login', authValidation, async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ error: errors.array()[0].msg });
     }
+
+    const { email, password } = req.body;
 
     try {
         const result = await pool.query(
