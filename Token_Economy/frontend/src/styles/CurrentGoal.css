@@ -50,6 +50,34 @@
   box-shadow: 0 1px 0 #c62828;
 }
 
+.start-session-btn {
+  background: linear-gradient(135deg, #f9a825 0%, #f06292 50%, #7c4dff 100%);
+  box-shadow: 0 5px 0 rgba(124, 77, 255, 0.4);
+}
+
+.start-session-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 0 rgba(124, 77, 255, 0.3);
+}
+
+.start-session-btn:active {
+  box-shadow: 0 2px 0 rgba(124, 77, 255, 0.4);
+}
+
+.cancel-session-btn {
+  background: linear-gradient(135deg, #ff8a80, #f06292);
+  box-shadow: 0 5px 0 #c62828;
+}
+
+.cancel-session-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 0 #c62828;
+}
+
+.cancel-session-btn:active {
+  box-shadow: 0 1px 0 #c62828;
+}
+
 select {
   font-family: 'Nunito', sans-serif;
   font-size: 0.95rem;
@@ -74,6 +102,11 @@ select:focus {
   border-color: #7c4dff;
   box-shadow: 0 0 0 3px rgba(124, 77, 255, 0.2);
   background-color: #e8d5ff;
+}
+
+select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 option {
@@ -203,4 +236,18 @@ option {
   .star-6 {
     font-size: 2rem;
   }
+}
+
+.stop-session-btn {
+  background: linear-gradient(135deg, #ff6f00, #e65100);
+  box-shadow: 0 5px 0 #bf360c;
+}
+
+.stop-session-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 0 #bf360c;
+}
+
+.stop-session-btn:active {
+  box-shadow: 0 1px 0 #bf360c;
 }

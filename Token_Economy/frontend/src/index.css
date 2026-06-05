@@ -57,6 +57,19 @@ html, body {
   pointer-events: none;
 }
 
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.header-nav {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
 .title {
   font-family: 'Fredoka One', cursive;
   font-size: 2rem;
@@ -76,13 +89,6 @@ html, body {
   letter-spacing: 0.03em;
   text-shadow: 0 1px 4px rgba(255, 255, 255, 0.5);
   margin-top: 0.1rem;
-}
-
-.top-bar {
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-  margin-bottom: 0.75rem;
 }
 
 .logout-btn {
@@ -109,6 +115,43 @@ html, body {
 .logout-btn:active {
   transform: translateY(2px);
   box-shadow: 0 1px 0 #c62828;
+}
+
+.navbar-btn {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  padding: 0.65rem 1.4rem;
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.5);
+  color: #5b21b6;
+  box-shadow: 0 4px 0 rgba(255, 255, 255, 0.3);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+  user-select: none;
+}
+
+.navbar-btn:hover {
+  background: rgba(255, 255, 255, 0.75);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 0 rgba(255, 255, 255, 0.3);
+}
+
+.navbar-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.navbar-btn.active {
+  background: linear-gradient(135deg, #f9a825 0%, #f06292 50%, #7c4dff 100%);
+  color: white;
+  box-shadow: 0 5px 0 rgba(124, 77, 255, 0.4);
+}
+
+.navbar-btn.active:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 0 rgba(124, 77, 255, 0.3);
 }
 
 .wrapper {
@@ -162,28 +205,175 @@ html, body {
   flex-wrap: wrap;
 }
 
-@media (max-width: 768px) {
-  .wrapper {
-    padding: 1rem;
-  }
+.analytics-wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
 
-  .right-align {
-    width: 100%;
-  }
+.analytics-section {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(8px);
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 0 rgba(255, 255, 255, 0.5), 0 8px 24px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+}
 
-  .title {
-    font-size: 1.5rem;
-  }
+.analytics-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.5rem;
+  color: #5b21b6;
+  margin-bottom: 1.25rem;
+  letter-spacing: 0.03em;
+}
 
-  .logout-btn {
-    padding: 0.4rem 0.9rem;
-    font-size: 0.875rem;
-  }
+.analytics-subtitle {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.2rem;
+  color: #5b21b6;
+  margin-bottom: 1rem;
+  letter-spacing: 0.03em;
+}
 
-  .component-header {
-    padding: 1rem 1.25rem;
-    font-size: 1.1rem;
-  }
+.overview-cards {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.overview-card {
+  flex: 1;
+  min-width: 140px;
+  background: linear-gradient(135deg, #f3eaff, #e8d5ff);
+  border: 2px solid #d0b8ff;
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  text-align: center;
+  box-shadow: 0 4px 0 #d0b8ff;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.overview-card:hover {
+  transform: translateY(-3px);
+}
+
+.overview-card-value {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.5rem;
+  color: #5b21b6;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.overview-card-label {
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #7c4dff;
+}
+
+.client-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.client-selector-btn {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  padding: 0.65rem 1.4rem;
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.6);
+  color: #5b21b6;
+  box-shadow: 0 4px 0 rgba(200, 180, 255, 0.4);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+  user-select: none;
+}
+
+.client-selector-btn:hover {
+  background: rgba(255, 255, 255, 0.85);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 0 rgba(200, 180, 255, 0.4);
+}
+
+.client-selector-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 rgba(200, 180, 255, 0.4);
+}
+
+.client-selector-btn.active {
+  background: linear-gradient(135deg, #f9a825 0%, #f06292 50%, #7c4dff 100%);
+  color: white;
+  box-shadow: 0 5px 0 rgba(124, 77, 255, 0.4);
+}
+
+.client-selector-btn.active:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 0 rgba(124, 77, 255, 0.3);
+}
+
+.chart-container {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.redemption-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.redemption-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #f3eaff, #e8d5ff);
+  border: 2px solid #d0b8ff;
+  border-radius: 1rem;
+  padding: 0.75rem 1rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  color: #3a3a5c;
+  gap: 1rem;
+}
+
+.redemption-name {
+  flex: 1;
+  font-size: 1rem;
+}
+
+.redemption-cost {
+  font-size: 0.95rem;
+  color: #7c4dff;
+}
+
+.redemption-date {
+  font-size: 0.85rem;
+  color: #9d4e8a;
+}
+
+.analytics-loading {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.5rem;
+  color: #5b21b6;
+  text-align: center;
+  padding: 4rem;
+}
+
+.analytics-empty {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #9d4e8a;
+  text-align: center;
+  padding: 2rem;
 }
 
 .login-page {
@@ -306,23 +496,68 @@ html, body {
 }
 
 .password-hints {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    padding: 0.75rem 1rem;
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 1rem;
-    border: 2px solid #d0b8ff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 1rem;
+  border: 2px solid #d0b8ff;
 }
 
 .password-hint {
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: #c62828;
-    transition: color 0.2s ease;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #c62828;
+  transition: color 0.2s ease;
 }
 
 .password-hint.met {
-    color: #2e7d32;
+  color: #2e7d32;
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 1rem;
+  }
+
+  .right-align {
+    width: 100%;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .logout-btn {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.875rem;
+  }
+
+  .component-header {
+    padding: 1rem 1.25rem;
+    font-size: 1.1rem;
+  }
+
+  .analytics-wrapper {
+    padding: 1rem;
+  }
+
+  .overview-card-value {
+    font-size: 2rem;
+  }
+
+  .overview-card {
+    min-width: 120px;
+  }
+
+  .header-container {
+    padding: 1rem 1.25rem;
+  }
+
+  .navbar-btn {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
 }

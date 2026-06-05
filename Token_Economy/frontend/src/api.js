@@ -93,4 +93,14 @@ export const api = {
             method: 'DELETE',
             headers: headers(),
         }).then(r => r.json()),
+
+    getClientAnalytics: (clientId) =>
+        fetch(`${BASE_URL}/analytics/client/${clientId}`, {
+            headers: headers(),
+        }).then(r => r.json()),
+
+    getOverviewAnalytics: () =>
+        fetch(`${BASE_URL}/analytics/overview`, {
+            headers: headers(),
+        }).then(r => r.json()),
 };

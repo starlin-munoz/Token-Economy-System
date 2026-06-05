@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { api } from "../api";
 
-function ClientProfile({ selectedProfile, setSelectedProfile, profile, setProfile }) {
+function ClientProfile({ selectedProfile, setSelectedProfile, profile, setProfile, onProfileSelect }) {
 
     // State to manage form
     const [showForm, setShowForm] = useState(false);
@@ -17,7 +17,7 @@ function ClientProfile({ selectedProfile, setSelectedProfile, profile, setProfil
 
     // Function to handle profile selection
     const handleProfileSelect = (id) => {
-        setSelectedProfile(selectedProfile === id ? null : id);
+        onProfileSelect(id);
     };
 
     // Function to handle submission

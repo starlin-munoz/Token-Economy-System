@@ -7,6 +7,7 @@ import './styles/RewardStore.css';
 import './styles/SelectToken.css';
 import TokenEconomy from './pages/TokenEconomy';
 import Login from './pages/Login';
+import Analytics from './pages/Analytics';
 
 function PrivateRoute({ children }) {
     const token = localStorage.getItem('token');
@@ -23,6 +24,14 @@ function App() {
                     element={
                         <PrivateRoute>
                             <TokenEconomy />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/analytics"
+                    element={
+                        <PrivateRoute>
+                            <Analytics />
                         </PrivateRoute>
                     }
                 />

@@ -1,14 +1,17 @@
 import { api } from '../api';
 
-function CurrentGoal({ currentGoalTokens, setCurrentGoalTokens, selected, awardedTokens, setAwardedTokens, maxTokens, setMaxTokens, popUp, setPopUp, selectedProfile, profile, sessionId, onSessionComplete }) {
+function CurrentGoal({ currentGoalTokens, setCurrentGoalTokens, selected, awardedTokens, setAwardedTokens, maxTokens, setMaxTokens, popUp, setPopUp, selectedProfile, profile, sessionId, sessionStarted, onStartSession, onCancelGoal, onStopSession }) {
 
     // State to track awarded tokens
     const tokens = currentGoalTokens.length;
 
+    // Whether all three conditions are met but session not yet started
+    const readyToStart = selectedProfile && selected && maxTokens && !sessionStarted;
+
     // Function to handle awarding a token
     const handleAwardToken = async () => {
-        // If no token is selected, no client is selected, no session, or the current goal is met
-        if (!selected || !selectedProfile || !sessionId || tokens >= maxTokens) {
+        // If no session is started or goal is met, return
+        if (!sessionStarted || !sessionId || !maxTokens || tokens >= maxTokens) {
             return;
         }
 
@@ -31,22 +34,18 @@ function CurrentGoal({ currentGoalTokens, setCurrentGoalTokens, selected, awarde
         setAwardedTokens(prev => [...prev, selected]);
     };
 
-    // Function to reset awarded tokens
-    const resetTokenBoard = async () => {
-        // Complete the current session and start a new one
-        await onSessionComplete(maxTokens);
+    // Reset the visual board only — session stays open
+    const resetTokenBoard = () => {
         setCurrentGoalTokens([]);
         setPopUp(false);
     };
 
     // Function to handle dropdown changes
-    const handleDropdown = async (e) => {
+    const handleDropdown = (e) => {
         const goal = parseInt(e.target.value, 10);
         setMaxTokens(goal);
         setCurrentGoalTokens([]);
         setPopUp(false);
-        // Complete current session and start a new one with the updated goal
-        await onSessionComplete(goal);
     };
 
     const selectedProfileName = profile.find(p => p.id === selectedProfile)?.name;
@@ -55,8 +54,8 @@ function CurrentGoal({ currentGoalTokens, setCurrentGoalTokens, selected, awarde
         <>
             <div className="component-header">
                 <strong>Current Goal</strong>
-                <select className="token-goal-select" onChange={handleDropdown} value={maxTokens}>
-                    <option value="" hidden>Token Goal</option>
+                <select className="token-goal-select" onChange={handleDropdown} value={maxTokens} disabled={sessionStarted}>
+                    <option value="" disabled>Token Goal</option>
                     {[...Array(10)].map((_, i) => (
                         <option key={i + 1} value={i + 1}>{i + 1}</option>
                     ))}
@@ -90,18 +89,33 @@ function CurrentGoal({ currentGoalTokens, setCurrentGoalTokens, selected, awarde
                         ))
                     )}
                 </p>
-                <div className="component-box">
-                    <button className="award-token token-btn" onClick={handleAwardToken} disabled={tokens >= maxTokens}>
-                        <strong>
-                            Award Token
-                        </strong>
-                    </button>
-                    <button className="reset-token-board token-btn" onClick={resetTokenBoard}>
-                        <strong>
-                            Reset Token Board
-                        </strong>
-                    </button>
-                </div>
+
+                {/* Show Start/Cancel when all conditions met but session not started */}
+                {readyToStart && (
+                    <div className="component-box">
+                        <button className="start-session-btn token-btn" onClick={onStartSession}>
+                            <strong>Start Session</strong>
+                        </button>
+                        <button className="cancel-session-btn token-btn" onClick={onCancelGoal}>
+                            <strong>Cancel</strong>
+                        </button>
+                    </div>
+                )}
+
+                {/* Show Award, Reset, and Stop when session is active */}
+                {sessionStarted && (
+                    <div className="component-box">
+                        <button className="award-token token-btn" onClick={handleAwardToken} disabled={tokens >= maxTokens}>
+                            <strong>Award Token</strong>
+                        </button>
+                        <button className="reset-token-board token-btn" onClick={resetTokenBoard}>
+                            <strong>Reset Token Board</strong>
+                        </button>
+                        <button className="stop-session-btn token-btn" onClick={onStopSession}>
+                            <strong>Stop Session</strong>
+                        </button>
+                    </div>
+                )}
             </div>
 
             {/* PopUp Model for when token goal is met */}
